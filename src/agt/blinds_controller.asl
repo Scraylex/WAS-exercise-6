@@ -30,6 +30,13 @@ blinds("lowered").
     invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState",  ["https://www.w3.org/2019/wot/json-schema#StringSchema"], [State])[ArtId];
     .print("Set blinds to state ", State).
 
+@lower_blinds_plan
++!lower_blinds : true <-
+    set_blinds_state("lowered").
+
+@raise_blinds_plan
++!raise_blinds : true <-
+    set_blinds_state("raised").
 
 @blinds_plan
 +blinds(State) : true <-

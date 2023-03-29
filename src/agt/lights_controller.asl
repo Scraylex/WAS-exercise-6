@@ -30,6 +30,14 @@ lights("off").
     invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState",  ["https://www.w3.org/2019/wot/json-schema#StringSchema"], [State])[ArtId];
     .print("Set blinds to state ", State).
 
+@lights_on_plan
++!lights_on : true <-
+    set_lights_state("lowered").
+
+@lights_off_plan
++!lights_off : true <-
+    set_lights_state("raised").
+
 @lights_plan
 +lights(State) : true <-
     .print("The blinds are ", State).

@@ -5,6 +5,7 @@
 // The agent has a belief about the location of the W3C Web of Thing (WoT) Thing Description (TD)
 // that describes a Thing of type https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService (was:CalendarService)
 td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService", "https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/calendar-service.ttl").
+upcoming_event(_).
 
 /* Initial goals */ 
 
@@ -20,7 +21,8 @@ td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarServic
 @start_plan
 +!start : td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService", Url) <-
     makeArtifact("calendar", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
-    .print("Hello world").
+    .print("Hello world");
+    !read_calender_state.
 
 @read_calender_state_plan
 +!read_calender_state : true <-
