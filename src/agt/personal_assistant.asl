@@ -3,6 +3,9 @@
 wake_up :- upcoming(Event) & owner_state(State) & Event == "now" & State == "asleep".
 all_good :- upcoming(Event) & owner_state(State) & Event == "now" & State == "awake".
 
+best_wake_method("lights") :- wake_method("lights") & wake_with_artificial_light(X) & wake_with_natural_light(Y) & X < Y.
+best_wake_method("blinds") :- wake_method("blinds") & wake_with_artificial_light(X) & wake_with_natural_light(Y) & X > Y.
+
 /* Initial goals */
 
 wake_with_natural_light(0).
@@ -27,6 +30,7 @@ wake_with_artificial_light(1).
 
 @wake_owner_plan
 +!wakeOwner : wake_up <-
+    .broadcast(askAll, wake_method);
     .print("lol").
 
 @owner_awake_plan
