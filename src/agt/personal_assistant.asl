@@ -1,5 +1,8 @@
 // personal assistant agent
 
+wake_up :- upcoming(Event) & owner_state(State) & Event == "now" & State == "asleep".
+all_good :- upcoming(Event) & owner_state(State) & Event == "now" & State == "awake".
+
 /* Initial goals */ 
 
 // The agent has the goal to start
@@ -14,9 +17,19 @@
 @start_plan
 +!start : true <-
     .print("Hello world");
-    !setupDweet;
+    //!setupDweet;
     .wait(2000);
-    publish("Hello world!").
+    //publish("Hello world!");
+    !start.
+
+@wake_owner_plan
++!wakeOwner : wake_up <-
+    .print("lol").
+
+@owner_awake_plan
++!ownerAwake : all_good <-
+    .print("Have fun at the event").
+
 
 @setup_dweet_artifact_plan
 +!setupDweet : true <- 
