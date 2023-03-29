@@ -32,11 +32,11 @@ lights("off").
 
 @lights_on_plan
 +!lights_on : true <-
-    set_lights_state("lowered").
+    set_lights_state("on").
 
 @lights_off_plan
 +!lights_off : true <-
-    set_lights_state("raised").
+    set_lights_state("off").
 
 @lights_plan
 +lights(State) : true <-
