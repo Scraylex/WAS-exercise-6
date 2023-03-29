@@ -28,7 +28,9 @@ lights("off").
 @set_lights_state_plan
 +!set_lights_state(State) : true <-
     invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState",  ["https://www.w3.org/2019/wot/json-schema#StringSchema"], [State])[ArtId];
-    .print("Set lights to state ", State).
+    .print("Set lights to state ", State);
+    -+lights(State);
+    .send(personal_assistant, tell, lights).
 
 @lights_on_plan
 +!lights_on : true <-
