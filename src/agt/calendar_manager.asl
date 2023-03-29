@@ -27,7 +27,7 @@ upcoming(_).
 @read_calender_state_plan
 +!read_calender_state : true <-
     readProperty("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#ReadUpcomingEvent",  EventState);
-    upcoming_event(EventState).
+    upcoming(EventState).
 
 @upcoming_event_plan
 +upcoming(State) : true <-
