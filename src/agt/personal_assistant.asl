@@ -3,7 +3,10 @@
 wake_up :- upcoming(Event) & owner_state(State) & Event == "now" & State == "asleep".
 all_good :- upcoming(Event) & owner_state(State) & Event == "now" & State == "awake".
 
-/* Initial goals */ 
+/* Initial goals */
+
+wake_with_natural_light(0).
+wake_with_artificial_light(1).
 
 // The agent has the goal to start
 !start.
