@@ -30,7 +30,7 @@ lights("off").
     invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState",  ["https://www.w3.org/2019/wot/json-schema#StringSchema"], [State])[ArtId];
     .print("Set lights to state ", State);
     -+lights(State);
-    .send(personal_assistant, tell, lights).
+    .send(personal_assistant, tell, lights(State)).
 
 @lights_on_plan
 +!lights_on : true <-
@@ -43,6 +43,10 @@ lights("off").
 @lights_plan
 +lights(State) : true <-
     .print("The lights are ", State).
+
+@respond_to_wake_method_plan
++!wake_method : lights("off") <-
+    .send(personal_assistant, tell, wake_method("lights")).
 
 
 /* Import behavior of agents that work in CArtAgO environments */

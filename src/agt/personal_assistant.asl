@@ -30,8 +30,13 @@ wake_with_artificial_light(1).
 
 @wake_owner_plan
 +!wakeOwner : wake_up <-
-    .broadcast(askAll, wake_method);
-    .print("lol").
+    .broadcast(askAll, wake_method, Answers);
+    !use_answer(Answers)
+    .print("lol, ", Answers).
+
+@select_wake_method_plan
++!use_answer(Answers) : true <-
+    .print("Think about this").
 
 @owner_awake_plan
 +!ownerAwake : all_good <-
