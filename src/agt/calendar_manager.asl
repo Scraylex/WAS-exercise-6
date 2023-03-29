@@ -5,7 +5,7 @@
 // The agent has a belief about the location of the W3C Web of Thing (WoT) Thing Description (TD)
 // that describes a Thing of type https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService (was:CalendarService)
 td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService", "https://raw.githubusercontent.com/Interactions-HSG/example-tds/was/tds/calendar-service.ttl").
-upcoming_event(_).
+upcoming(_).
 
 /* Initial goals */ 
 
@@ -20,7 +20,7 @@ upcoming_event(_).
 */
 @start_plan
 +!start : td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarService", Url) <-
-    makeArtifact("calendar", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
+    makeArtifact("upcoming", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
     .print("Hello world");
     !read_calender_state.
 
@@ -30,8 +30,8 @@ upcoming_event(_).
     upcoming_event(EventState).
 
 @upcoming_event_plan
-+upcoming_event(State) : true <-
-    .print("The owner is ", State).
++upcoming(State) : true <-
+    .print("Upcoming event is ", State).
 
 /* Import behavior of agents that work in CArtAgO environments */
 { include("$jacamoJar/templates/common-cartago.asl") }
