@@ -9,6 +9,7 @@ td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#Lights", "http
 // The agent initially believes that the lights are "off"
 lights("off").
 
+
 /* Initial goals */ 
 
 // The agent has the goal to start
@@ -44,8 +45,15 @@ lights("off").
 +lights(State) : true <-
     .print("The lights are ", State).
 
-@respond_to_wake_method_plan
-+!wake_method : lights("off") <-
+@manipulate_lights_pa_plan
++lights(State) : lights(State)[source(personal_assistant)] <-
+    .print("Received from PA ", State);
+    !set_lights_state(State);
+    .send(personal_assistant, untell, wake_method("lights")).
+
+@tell_wake_method_plan
++query_wake_method : lights("off") <-
+    .print("telling PA: lights");
     .send(personal_assistant, tell, wake_method("lights")).
 
 

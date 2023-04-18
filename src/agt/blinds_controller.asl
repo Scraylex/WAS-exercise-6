@@ -44,8 +44,15 @@ blinds("lowered").
 +blinds(State) : true <-
     .print("The blinds are ", State).
 
-@respond_to_wake_method_plan
-+!wake_method : blinds("lowered") <-
+@manipulate_blinds_pa_plan
++blinds(State) : blinds(State)[source(personal_assistant)] <-
+    .print("Received from PA ", State);
+    !set_blinds_state(State);
+    .send(personal_assistant, untell, wake_method("blinds")).
+
+@tell_wake_method_plan
++query_wake_method : blinds("lowered") <-
+    .print("telling PA: blinds");
     .send(personal_assistant, tell, wake_method("blinds")).
 
 /* Import behavior of agents that work in CArtAgO environments */

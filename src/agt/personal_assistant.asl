@@ -3,13 +3,12 @@
 wake_up :- upcoming(Event) & owner_state(State) & Event == "now" & State == "asleep".
 all_good :- upcoming(Event) & owner_state(State) & Event == "now" & State == "awake".
 
-best_wake_method("lights") :- wake_method("lights") & wake_with_artificial_light(X) & wake_with_natural_light(Y) & X < Y.
-best_wake_method("blinds") :- wake_method("blinds") & wake_with_artificial_light(X) & wake_with_natural_light(Y) & X > Y.
+best_wake_method(State, Pos) :- wake_method(State) & wake_with(State, Pos) & current_option(Value) & Pos == Value.
 
 /* Initial goals */
-
-wake_with_natural_light(0).
-wake_with_artificial_light(1).
+current_option(0).
+wake_with("lights", 1).
+wake_with("blinds", 0).
 
 // The agent has the goal to start
 !start.
@@ -23,23 +22,37 @@ wake_with_artificial_light(1).
 @start_plan
 +!start : true <-
     .print("Hello world");
-    //!setupDweet;
     .wait(2000);
+    !wakeOwner;
+
+    //!setupDweet;
     //publish("Hello world!");
+    
     !start.
 
 @wake_owner_plan
 +!wakeOwner : wake_up <-
-    .broadcast(askAll, wake_method, Answers);
-    !use_answer(Answers)
-    .print("lol, ", Answers).
+    .print("Waking owner");
+    .broadcast(tell, query_wake_method);
+    !handle_waking.
 
-@select_wake_method_plan
-+!use_answer(Answers) : true <-
-    .print("Think about this").
+@wake_with_lights_plan
++!handle_waking : best_wake_method("lights", 1) <-
+    .send(tell, lights_controller, lights("on"));
+    -current_option(1);
+    .print("Sent lights on").
+
+@wake_with_blinds_plan
++!handle_waking : best_wake_method("blinds", 0) <-
+    .send(tell, blinds_controller, blinds("raised"));
+    -+current_option(1);
+    .print("Sent blinds raised").
+
+-!handle_waking : true <-
+    .print("No waking plan available").
 
 @owner_awake_plan
-+!ownerAwake : all_good <-
++!wakeOwner : all_good <-
     .print("Have fun at the event").
 
 
